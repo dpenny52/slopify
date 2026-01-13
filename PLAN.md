@@ -256,28 +256,29 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
-## Feature 8: Video Download
+## Feature 8: Video Download ✅ COMPLETE
 
 ### Tasks
 
-- [ ] Create DownloadButton component
-- [ ] Implement blob URL creation
-- [ ] Trigger browser download with filename
-- [ ] Show file size estimate
-- [ ] Clean up blob URLs after download
+- [x] Create DownloadButton component
+- [x] Implement blob URL creation
+- [x] Trigger browser download with filename
+- [x] Show file size estimate
+- [x] Clean up blob URLs after download
 
 ### Acceptance Criteria
 
-- [ ] Download button appears after processing
-- [ ] Click saves MP4 to device
-- [ ] File named "slopify-video-[timestamp].mp4"
-- [ ] File size shown before download
-- [ ] Blob URLs cleaned up
+- [x] Download button appears after processing
+- [x] Click saves MP4 to device
+- [x] File named "slopify-video-[timestamp].mp4"
+- [x] File size shown before download
+- [x] Blob URLs cleaned up
 
 ### Tests
 
-- Blob URL creation
-- Download trigger mechanism
+- [x] DownloadButton component tests (16 tests)
+- [x] formatFileSize utility tests
+- [x] generateVideoFilename utility tests
 
 ---
 
