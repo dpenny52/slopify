@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import OverlayThumbnail from './OverlayThumbnail'
 import { useOverlays } from '@hooks/useOverlays'
 import type { OverlayVideo } from '@/types/overlay'
@@ -19,13 +20,10 @@ export default function OverlaySelector({
     getSelectedOverlays,
   } = useOverlays()
 
-  const handleToggle = (id: string) => {
-    toggleSelection(id)
-    // Call the callback after state update
-    setTimeout(() => {
-      onSelectionChange?.(getSelectedOverlays())
-    }, 0)
-  }
+  // Notify parent when selection changes
+  useEffect(() => {
+    onSelectionChange?.(getSelectedOverlays())
+  }, [selectionCount, getSelectedOverlays, onSelectionChange])
 
   return (
     <div className="space-y-4">
@@ -58,7 +56,7 @@ export default function OverlaySelector({
             overlay={overlay}
             isSelected={isSelected(overlay.id)}
             disabled={!canSelect && !isSelected(overlay.id)}
-            onToggle={() => handleToggle(overlay.id)}
+            onToggle={() => toggleSelection(overlay.id)}
           />
         ))}
       </div>

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   getGridArea,
+  getOverlayPosition,
   getVisiblePositions,
   GRID_CENTER,
   GRID_POSITIONS,
@@ -25,25 +26,43 @@ describe('grid types', () => {
     })
   })
 
-  describe('getGridArea', () => {
-    it('returns correct area for center', () => {
-      expect(getGridArea(GRID_CENTER)).toBe('2 / 2 / 3 / 3')
+  describe('getGridArea (legacy)', () => {
+    it('returns full cell area for center', () => {
+      expect(getGridArea(GRID_CENTER)).toBe('1 / 1 / 2 / 2')
     })
 
-    it('returns correct area for position 0 (top-left)', () => {
-      expect(getGridArea(0)).toBe('1 / 1 / 2 / 2')
+    it('returns empty for overlay positions (use getOverlayPosition instead)', () => {
+      expect(getGridArea(0)).toBe('')
+      expect(getGridArea(1)).toBe('')
+      expect(getGridArea(7)).toBe('')
+    })
+  })
+
+  describe('getOverlayPosition', () => {
+    it('returns top-left position for position 0', () => {
+      const pos = getOverlayPosition(0)
+      expect(pos.left).toBe('0%')
+      expect(pos.top).toBe('0%')
+      expect(pos.width).toBe('25%')
+      expect(pos.height).toBe('25%')
     })
 
-    it('returns correct area for position 1 (top-center)', () => {
-      expect(getGridArea(1)).toBe('1 / 2 / 2 / 3')
+    it('returns top-center position for position 1', () => {
+      const pos = getOverlayPosition(1)
+      expect(pos.left).toBe('37.5%')
+      expect(pos.top).toBe('0%')
     })
 
-    it('returns correct area for position 2 (top-right)', () => {
-      expect(getGridArea(2)).toBe('1 / 3 / 2 / 4')
+    it('returns top-right position for position 2', () => {
+      const pos = getOverlayPosition(2)
+      expect(pos.right).toBe('0%')
+      expect(pos.top).toBe('0%')
     })
 
-    it('returns correct area for position 7 (bottom-right)', () => {
-      expect(getGridArea(7)).toBe('3 / 3 / 4 / 4')
+    it('returns bottom-right position for position 7', () => {
+      const pos = getOverlayPosition(7)
+      expect(pos.right).toBe('0%')
+      expect(pos.bottom).toBe('0%')
     })
   })
 

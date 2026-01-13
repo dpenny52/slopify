@@ -1,4 +1,9 @@
-import { type GridPosition, GRID_POSITIONS, GRID_SIZE } from '@/types/grid'
+import { type GridPosition, GRID_POSITIONS } from '@/types/grid'
+
+// Overlay size as fraction of the canvas (1/4 = 0.25)
+const OVERLAY_SIZE_FRACTION = 0.25
+// Margin from edges as fraction of canvas (0 = touch edges)
+const OVERLAY_MARGIN_FRACTION = 0
 
 export interface CompositorConfig {
   width: number
@@ -12,8 +17,9 @@ export interface GridSource {
 }
 
 /**
- * Compositor handles drawing multiple video frames onto a canvas in a 3x3 grid layout.
- * The center cell contains the main video, and the outer 8 cells contain overlays.
+ * Compositor handles drawing multiple video frames onto a canvas.
+ * The main video fills the entire frame, and overlay videos are small
+ * thumbnails positioned around the edges on top of the main video.
  */
 export class VideoCompositor {
   private canvas: OffscreenCanvas
@@ -32,7 +38,9 @@ export class VideoCompositor {
   }
 
   /**
-   * Calculate the dimensions and position of a cell in the grid
+   * Calculate the dimensions and position of a cell.
+   * Center position gets the full canvas.
+   * Overlay positions get small thumbnails around the edges.
    */
   getCellRect(position: GridPosition | 'center'): {
     x: number
@@ -40,31 +48,44 @@ export class VideoCompositor {
     width: number
     height: number
   } {
-    const { width, height, cellGap } = this.config
-    const cellWidth = (width - cellGap * (GRID_SIZE - 1)) / GRID_SIZE
-    const cellHeight = (height - cellGap * (GRID_SIZE - 1)) / GRID_SIZE
+    const { width, height } = this.config
 
-    let row: number
-    let col: number
-
+    // Center/main video takes full canvas
     if (position === 'center') {
-      row = 1
-      col = 1
-    } else {
-      const posInfo = GRID_POSITIONS.find((p) => p.position === position)
-      if (!posInfo) {
-        throw new Error(`Invalid position: ${position}`)
-      }
-      row = posInfo.row
-      col = posInfo.col
+      return { x: 0, y: 0, width, height }
     }
 
-    return {
-      x: col * (cellWidth + cellGap),
-      y: row * (cellHeight + cellGap),
-      width: cellWidth,
-      height: cellHeight,
+    // Overlay videos are small thumbnails
+    const overlayWidth = Math.round(width * OVERLAY_SIZE_FRACTION)
+    const overlayHeight = Math.round(height * OVERLAY_SIZE_FRACTION)
+    const margin = Math.round(Math.min(width, height) * OVERLAY_MARGIN_FRACTION)
+
+    const posInfo = GRID_POSITIONS.find((p) => p.position === position)
+    if (!posInfo) {
+      throw new Error(`Invalid position: ${position}`)
     }
+
+    // Calculate x position based on column (0=left, 1=center, 2=right)
+    let x: number
+    if (posInfo.col === 0) {
+      x = margin
+    } else if (posInfo.col === 1) {
+      x = Math.round((width - overlayWidth) / 2)
+    } else {
+      x = width - overlayWidth - margin
+    }
+
+    // Calculate y position based on row (0=top, 1=middle, 2=bottom)
+    let y: number
+    if (posInfo.row === 0) {
+      y = margin
+    } else if (posInfo.row === 1) {
+      y = Math.round((height - overlayHeight) / 2)
+    } else {
+      y = height - overlayHeight - margin
+    }
+
+    return { x, y, width: overlayWidth, height: overlayHeight }
   }
 
   /**

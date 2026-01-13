@@ -43,19 +43,71 @@ export interface GridLayoutState {
   overlays: GridItem[]
 }
 
-// Get CSS grid area for a position
+// Overlay size as percentage of container
+const OVERLAY_SIZE_PERCENT = 25 // 1/4 = 25%
+const OVERLAY_MARGIN_PERCENT = 0 // Touch edges
+
+export interface OverlayPosition {
+  top?: string
+  bottom?: string
+  left?: string
+  right?: string
+  width: string
+  height: string
+}
+
+// Get CSS positioning for overlay videos
+export function getOverlayPosition(position: GridPosition): OverlayPosition {
+  const posInfo = GRID_POSITIONS.find((p) => p.position === position)
+  if (!posInfo) {
+    return {
+      top: '0',
+      left: '0',
+      width: `${OVERLAY_SIZE_PERCENT}%`,
+      height: `${OVERLAY_SIZE_PERCENT}%`,
+    }
+  }
+
+  const size = `${OVERLAY_SIZE_PERCENT}%`
+  const margin = `${OVERLAY_MARGIN_PERCENT}%`
+
+  // Calculate horizontal position
+  let horizontal: { left?: string; right?: string }
+  if (posInfo.col === 0) {
+    horizontal = { left: margin }
+  } else if (posInfo.col === 1) {
+    horizontal = { left: `${50 - OVERLAY_SIZE_PERCENT / 2}%` }
+  } else {
+    horizontal = { right: margin }
+  }
+
+  // Calculate vertical position
+  let vertical: { top?: string; bottom?: string }
+  if (posInfo.row === 0) {
+    vertical = { top: margin }
+  } else if (posInfo.row === 1) {
+    vertical = { top: `${50 - OVERLAY_SIZE_PERCENT / 2}%` }
+  } else {
+    vertical = { bottom: margin }
+  }
+
+  return {
+    ...horizontal,
+    ...vertical,
+    width: size,
+    height: size,
+  }
+}
+
+// Legacy: Get CSS grid area for a position (kept for backwards compatibility)
 export function getGridArea(
   position: GridPosition | typeof GRID_CENTER
 ): string {
   if (position === GRID_CENTER) {
-    return '2 / 2 / 3 / 3' // row-start / col-start / row-end / col-end
+    return '1 / 1 / 2 / 2' // Full cell in a 1x1 grid
   }
-  const posInfo = GRID_POSITIONS.find((p) => p.position === position)
-  if (!posInfo) return ''
-  // CSS grid is 1-indexed
-  const row = posInfo.row + 1
-  const col = posInfo.col + 1
-  return `${row} / ${col} / ${row + 1} / ${col + 1}`
+  // For overlay positions, return empty (they use absolute positioning now)
+  return ''
 }
 
 // Calculate which positions should be visible based on number of overlays

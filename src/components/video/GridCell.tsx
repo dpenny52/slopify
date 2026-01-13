@@ -1,5 +1,9 @@
-import { useRef, useEffect, DragEvent } from 'react'
-import { type GridPosition, GRID_CENTER, getGridArea } from '@/types/grid'
+import { useRef, useEffect, DragEvent, CSSProperties } from 'react'
+import {
+  type GridPosition,
+  GRID_CENTER,
+  getOverlayPosition,
+} from '@/types/grid'
 
 interface GridCellProps {
   position: GridPosition | typeof GRID_CENTER
@@ -38,8 +42,6 @@ export default function GridCell({
     }
   }, [videoSrc])
 
-  const gridArea = getGridArea(position)
-
   const handleDragStart = (e: DragEvent<HTMLDivElement>) => {
     if (!isDraggable || position === GRID_CENTER) return
     e.dataTransfer.effectAllowed = 'move'
@@ -65,19 +67,36 @@ export default function GridCell({
     onDragEnd?.()
   }
 
+  // Build style based on position type
+  let style: CSSProperties
+  if (isMainVideo) {
+    // Main video takes full area
+    style = {
+      position: 'absolute',
+      inset: 0,
+      zIndex: 0,
+    }
+  } else {
+    // Overlays use absolute positioning on top of main video
+    const overlayPos = getOverlayPosition(position as GridPosition)
+    style = {
+      position: 'absolute',
+      zIndex: 10,
+      ...overlayPos,
+    }
+  }
+
   return (
     <div
       className={`
-        relative
         bg-[var(--background-secondary)]
         rounded-lg
         overflow-hidden
-        aspect-video
-        ${isMainVideo ? 'ring-2 ring-[var(--accent)]' : ''}
+        ${isMainVideo ? '' : 'shadow-lg ring-1 ring-black/20'}
         ${isDraggable && position !== GRID_CENTER ? 'cursor-grab active:cursor-grabbing' : ''}
         ${isDropTarget ? 'ring-2 ring-dashed ring-[var(--border)]' : ''}
       `}
-      style={{ gridArea }}
+      style={style}
       draggable={isDraggable && position !== GRID_CENTER}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
@@ -108,9 +127,9 @@ export default function GridCell({
         </div>
       )}
 
-      {label && videoSrc && (
-        <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-          <p className="text-xs text-white truncate">{label}</p>
+      {label && videoSrc && !isMainVideo && (
+        <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-1 py-0.5">
+          <p className="text-[10px] text-white truncate">{label}</p>
         </div>
       )}
     </div>

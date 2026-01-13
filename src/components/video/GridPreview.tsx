@@ -69,7 +69,7 @@ export default function GridPreview({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium text-[var(--text-primary)]">
-          Grid Preview
+          Preview
         </h3>
         {selectedOverlays.length > 1 && (
           <p className="text-sm text-[var(--text-secondary)]">
@@ -79,15 +79,19 @@ export default function GridPreview({
       </div>
 
       <div
-        className="grid gap-2 aspect-square max-w-xl mx-auto"
-        style={{
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gridTemplateRows: 'repeat(3, 1fr)',
-        }}
-        role="grid"
-        aria-label="Video grid layout"
+        className="relative aspect-video max-w-xl mx-auto bg-[var(--background-secondary)] rounded-lg overflow-hidden"
+        role="region"
+        aria-label="Video preview layout"
       >
-        {/* Render overlay cells */}
+        {/* Main video takes full area */}
+        <GridCell
+          position={GRID_CENTER}
+          videoSrc={mainVideoSrc}
+          isMainVideo
+          label="Main Video"
+        />
+
+        {/* Render overlay cells as small thumbnails on top */}
         {GRID_POSITIONS.map(({ position }) => {
           const isVisible = visiblePositions.includes(position)
           if (!isVisible) return null
@@ -113,19 +117,11 @@ export default function GridPreview({
             />
           )
         })}
-
-        {/* Center cell for main video */}
-        <GridCell
-          position={GRID_CENTER}
-          videoSrc={mainVideoSrc}
-          isMainVideo
-          label="Main Video"
-        />
       </div>
 
       {selectedOverlays.length === 0 && (
         <p className="text-sm text-[var(--text-secondary)] text-center">
-          Select overlays to see the grid preview
+          Select overlays to see them on the video
         </p>
       )}
     </div>

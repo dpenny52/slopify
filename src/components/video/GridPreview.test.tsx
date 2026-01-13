@@ -30,28 +30,28 @@ const mockOverlays: OverlayVideo[] = [
 ]
 
 describe('GridPreview', () => {
-  it('renders grid heading', () => {
+  it('renders preview heading', () => {
     render(<GridPreview selectedOverlays={[]} />)
-    expect(screen.getByText('Grid Preview')).toBeInTheDocument()
+    expect(screen.getByText('Preview')).toBeInTheDocument()
   })
 
   it('shows help text when no overlays selected', () => {
     render(<GridPreview selectedOverlays={[]} />)
     expect(
-      screen.getByText(/select overlays to see the grid preview/i)
+      screen.getByText(/select overlays to see them on the video/i)
     ).toBeInTheDocument()
   })
 
   it('does not show help text when overlays selected', () => {
     render(<GridPreview selectedOverlays={mockOverlays} />)
     expect(
-      screen.queryByText(/select overlays to see the grid preview/i)
+      screen.queryByText(/select overlays to see them on the video/i)
     ).not.toBeInTheDocument()
   })
 
-  it('renders grid container', () => {
+  it('renders preview container', () => {
     render(<GridPreview selectedOverlays={mockOverlays} />)
-    expect(screen.getByRole('grid')).toBeInTheDocument()
+    expect(screen.getByRole('region')).toBeInTheDocument()
   })
 
   it('shows drag hint when multiple overlays', () => {
