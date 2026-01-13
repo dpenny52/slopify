@@ -14,6 +14,23 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
+## Known Bugs
+
+### BUG-001: Signup shows "Email already in use" for new emails
+
+- **Status**: Open
+- **Priority**: High
+- **Description**: When trying to sign up with a new email address, the error message "Could not create account. Email already in use." is displayed even though the email has never been used before.
+- **Steps to reproduce**:
+  1. Go to the signup form
+  2. Enter a completely new email address
+  3. Fill in password and confirm password
+  4. Submit the form
+- **Expected**: Account created successfully
+- **Actual**: Error "Email already in use" displayed
+
+---
+
 ## Feature 1: Project Scaffolding ✅ COMPLETE
 
 ### Tasks
@@ -175,31 +192,31 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
-## Feature 6: Grid Layout Preview
+## Feature 6: Grid Layout Preview ✅ COMPLETE
 
 ### Tasks
 
-- [ ] Define grid layout constants (8 outer + 1 center cell)
-- [ ] Create GridCell component
-- [ ] Create GridPreview component (3x3 grid)
-- [ ] Implement useGridLayout hook
-- [ ] Allow drag-and-drop rearrangement
-- [ ] Show live preview with all videos playing
-- [ ] Handle different overlay counts (1-8)
+- [x] Define grid layout constants (8 outer + 1 center cell)
+- [x] Create GridCell component
+- [x] Create GridPreview component (3x3 grid)
+- [x] Implement useGridLayout hook
+- [x] Allow drag-and-drop rearrangement
+- [x] Show live preview with all videos playing
+- [x] Handle different overlay counts (1-8)
 
 ### Acceptance Criteria
 
-- [ ] Grid with center cell for main video
-- [ ] Selected overlays populate outer cells (grid adapts to number selected)
-- [ ] Empty cells hidden (asymmetric layout when <8 overlays selected)
-- [ ] Users can rearrange overlay positions
-- [ ] All videos play simultaneously in preview
+- [x] Grid with center cell for main video
+- [x] Selected overlays populate outer cells (grid adapts to number selected)
+- [x] Empty cells hidden (asymmetric layout when <8 overlays selected)
+- [x] Users can rearrange overlay positions
+- [x] All videos play simultaneously in preview
 
 ### Tests
 
-- Grid renders correct number of cells
-- Overlay positioning logic
-- Drag-and-drop reordering
+- [x] Grid renders correct number of cells
+- [x] Overlay positioning logic
+- [x] Drag-and-drop reordering
 
 ---
 

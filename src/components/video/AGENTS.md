@@ -39,6 +39,23 @@
 - Uses `useOverlays` hook for selection state
 - Calls `onSelectionChange` callback when selection changes
 
+### GridCell
+
+- Single cell in the 3x3 grid layout
+- Can display video with auto-play (muted, looped)
+- Supports drag-and-drop for position swapping
+- Special styling for main video (center cell)
+- Uses CSS grid area for positioning
+
+### GridPreview
+
+- 3x3 grid layout preview
+- Center cell for main video
+- Outer 8 cells for overlay videos
+- Intelligent position distribution for < 8 overlays
+- Drag-and-drop to swap overlay positions
+- Uses `useGridLayout` hook for state management
+
 ## Hooks
 
 ### useVideoUpload (`src/hooks/useVideoUpload.ts`)
@@ -53,6 +70,13 @@
 - Manages overlay selection state
 - Enforces min (1) and max (8) selection limits
 - Exports: `overlays`, `selectedIds`, `selectionCount`, `isSelected`, `canSelect`, `hasMinSelection`, `toggleSelection`, `selectOverlay`, `deselectOverlay`, `clearSelection`, `getSelectedOverlays`
+
+### useGridLayout (`src/hooks/useGridLayout.ts`)
+
+- Manages grid layout state for video compositing
+- Assigns positions to overlays using priority-based distribution
+- Supports swap operations for drag-and-drop
+- Exports: `gridItems`, `visiblePositions`, `setOverlays`, `moveOverlay`, `swapOverlays`, `getOverlayAtPosition`, `clearGrid`
 
 ## Validation Utilities
 
@@ -81,6 +105,15 @@
 - `SAMPLE_OVERLAYS` - Array of 8 pre-configured overlay videos
 - Constants: `MIN_OVERLAY_SELECTION` (1), `MAX_OVERLAY_SELECTION` (8)
 
+### grid.ts (`src/types/grid.ts`)
+
+- `GridPosition` - Type for outer cell positions (0-7)
+- `GRID_CENTER` - Constant for center cell
+- `GRID_POSITIONS` - Array mapping positions to row/col coordinates
+- `GridItem` - Item with id and position
+- `getGridArea(position)` - Returns CSS grid-area value
+- `getVisiblePositions(count)` - Returns which positions to show for n overlays
+
 ## Sample Overlays
 
 - 8 sample overlay videos in `public/sample-overlays/`
@@ -97,3 +130,10 @@
 - Video element metadata extraction needs browser APIs (tested via integration)
 - Use `fireEvent.click` on checkbox role elements for selection tests
 - TypeScript strict mode: use non-null assertion (!) after explicit `expect().toBeDefined()` checks
+- Mock `HTMLMediaElement.prototype.play` in tests with video auto-play:
+  ```ts
+  beforeAll(() => {
+    HTMLMediaElement.prototype.play = vi.fn().mockReturnValue(Promise.resolve())
+  })
+  ```
+- Grid functions like `getGridArea` and `getVisiblePositions` are pure and easy to unit test
