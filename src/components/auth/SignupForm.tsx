@@ -53,8 +53,23 @@ function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
     try {
       await signIn('password', { email, password, flow: 'signUp' })
       onSuccess?.()
-    } catch {
-      setError('Could not create account. Email may already be in use.')
+    } catch (err) {
+      // Handle specific error types from Convex Auth
+      const errorMessage =
+        err instanceof Error ? err.message : 'An unexpected error occurred'
+
+      if (
+        errorMessage.includes('already exists') ||
+        errorMessage.includes('already in use')
+      ) {
+        setError('An account with this email already exists.')
+      } else if (errorMessage.includes('Invalid')) {
+        setError('Invalid email or password format.')
+      } else {
+        // Log the actual error for debugging
+        console.error('Signup error:', errorMessage)
+        setError('Could not create account. Please try again.')
+      }
     } finally {
       setIsLoading(false)
     }

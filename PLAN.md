@@ -18,16 +18,22 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ### BUG-001: Signup shows "Email already in use" for new emails
 
-- **Status**: Open
+- **Status**: Improved - Needs Investigation
 - **Priority**: High
-- **Description**: When trying to sign up with a new email address, the error message "Could not create account. Email already in use." is displayed even though the email has never been used before.
+- **Description**: When trying to sign up with a new email address, an error is displayed even though the email has never been used before.
 - **Steps to reproduce**:
-  1. Go to the signup form
-  2. Enter a completely new email address
-  3. Fill in password and confirm password
-  4. Submit the form
+  1. Run `npm run dev` to start both Vite and Convex dev servers
+  2. Go to the signup form
+  3. Enter a completely new email address
+  4. Fill in password and confirm password
+  5. Submit the form
 - **Expected**: Account created successfully
-- **Actual**: Error "Email already in use" displayed
+- **Actual**: Error displayed
+- **Improvements Made**:
+  - Improved error handling in SignupForm to parse and display specific error messages
+  - Added console.error logging to help debug the actual error from Convex
+  - Error messages are now more specific based on the error type
+- **Next Steps**: Run the app with `npm run dev` and check the browser console for the actual error message when signup fails
 
 ### BUG-002: Convex dev server not started with npm run dev
 
