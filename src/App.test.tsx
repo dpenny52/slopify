@@ -11,6 +11,39 @@ vi.mock('@convex-dev/auth/react', () => ({
   useAuthActions: () => ({ signOut: vi.fn() }),
 }))
 
+vi.mock('@/lib/video', () => ({
+  checkBrowserCompatibility: () => ({
+    supported: true,
+    videoDecoder: true,
+    videoEncoder: true,
+    offscreenCanvas: true,
+    webWorker: true,
+    missingFeatures: [],
+  }),
+  getCompatibilityMessage: () => '',
+}))
+
+vi.mock('@/hooks/useVideoProcessor', () => ({
+  useVideoProcessor: () => ({
+    isProcessing: false,
+    progress: null,
+    error: null,
+    outputBlob: null,
+    processVideos: vi.fn(),
+    cancelProcessing: vi.fn(),
+    clearOutput: vi.fn(),
+    downloadOutput: vi.fn(),
+    browserCompatibility: {
+      supported: true,
+      videoDecoder: true,
+      videoEncoder: true,
+      offscreenCanvas: true,
+      webWorker: true,
+      missingFeatures: [],
+    },
+  }),
+}))
+
 describe('App', () => {
   it('renders homepage by default', () => {
     render(
@@ -33,7 +66,7 @@ describe('App', () => {
       </MemoryRouter>
     )
     expect(
-      screen.getByRole('heading', { name: /editor/i, level: 1 })
+      screen.getByRole('heading', { name: /create your video/i, level: 1 })
     ).toBeInTheDocument()
   })
 
