@@ -29,6 +29,13 @@
 - Uses VideoProcessor from lib/video/processor
 - Returns: isProcessing, progress, error, outputBlob, processVideos, cancelProcessing, clearOutput, downloadOutput
 
+### useProjects
+
+- Manages Convex project save/load operations
+- Uses Convex useQuery and useMutation hooks
+- Returns: projects, isLoading, error, saveProject, deleteProject, updateProject, clearError
+- Requires user to be authenticated
+
 ## Testing Hooks
 
 - Use `renderHook` from @testing-library/react

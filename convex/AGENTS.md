@@ -34,5 +34,36 @@ npx convex deploy # Deploy to production
 ## Security
 
 - All queries must filter by authenticated `userId`
-- Use `ctx.auth.getUserIdentity()` in queries/mutations
+- Use `auth.getUserId(ctx)` in queries/mutations (from auth.ts)
 - Never expose other users' data
+
+## Projects API (projects.ts)
+
+### Mutations
+
+- `saveProject` - Create new project (requires auth)
+- `deleteProject` - Delete project by ID (requires auth, validates ownership)
+- `updateProject` - Update existing project (requires auth, validates ownership)
+
+### Queries
+
+- `getUserProjects` - Get all projects for current user, ordered by createdAt desc
+- `getProject` - Get single project by ID (validates ownership)
+
+## Frontend Usage
+
+```typescript
+import { useQuery, useMutation } from 'convex/react'
+import { api } from '../../convex/_generated/api'
+
+// Query projects
+const projects = useQuery(api.projects.getUserProjects)
+
+// Save project
+const saveProject = useMutation(api.projects.saveProject)
+await saveProject({ name, overlayIds, positions })
+
+// Delete project
+const deleteProject = useMutation(api.projects.deleteProject)
+await deleteProject({ id })
+```

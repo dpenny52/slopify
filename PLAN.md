@@ -29,6 +29,19 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - **Expected**: Account created successfully
 - **Actual**: Error "Email already in use" displayed
 
+### BUG-002: Convex dev server not started with npm run dev
+
+- **Status**: Open
+- **Priority**: High
+- **Description**: The Convex dev server needs to be running for auth and database operations to work. Currently, `npm run dev` only starts Vite, not the Convex dev server.
+- **Steps to reproduce**:
+  1. Run `npm run dev`
+  2. Try to log in to the app
+  3. See error "Could not find public function for 'auth:signIn'"
+- **Expected**: App connects to Convex backend
+- **Actual**: Server error - Convex functions not found
+- **Fix**: Update package.json scripts to run `concurrently` with both Vite and Convex dev servers, or document that `npx convex dev` must be run separately.
+
 ---
 
 ## Feature 1: Project Scaffolding ✅ COMPLETE
@@ -282,37 +295,38 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
-## Feature 9: Project Save/Load
+## Feature 9: Project Save/Load ✅ COMPLETE
 
 **Note:** Only project configuration is saved (overlay selections, positions, project name). The main video is NOT stored - users must re-upload it when loading a saved project.
 
 ### Tasks
 
-- [ ] Define project schema in Convex (name, overlayIds, positions, createdAt)
-- [ ] Create saveProject mutation
-- [ ] Create getUserProjects query
-- [ ] Create deleteProject mutation
-- [ ] Create ProjectSaveDialog component
-- [ ] Create ProjectList component
-- [ ] Create ProjectCard component
-- [ ] Implement useProjects hook
-- [ ] Add "re-upload video" prompt when loading saved project
+- [x] Define project schema in Convex (name, overlayIds, positions, createdAt)
+- [x] Create saveProject mutation
+- [x] Create getUserProjects query
+- [x] Create deleteProject mutation
+- [x] Create ProjectSaveDialog component
+- [x] Create ProjectList component
+- [x] Create ProjectCard component
+- [x] Implement useProjects hook
+- [x] Add "re-upload video" prompt when loading saved project
 
 ### Acceptance Criteria
 
-- [ ] Users can save project with a name
-- [ ] Projects persist after logout/login
-- [ ] Users see list of saved projects
-- [ ] Loading project restores overlay selections and positions
-- [ ] Loading project prompts user to re-upload main video
-- [ ] Users can delete projects
-- [ ] Only authenticated users can save/load
+- [x] Users can save project with a name
+- [x] Projects persist after logout/login
+- [x] Users see list of saved projects
+- [x] Loading project restores overlay selections and positions
+- [x] Loading project prompts user to re-upload main video
+- [x] Users can delete projects
+- [x] Only authenticated users can save/load
 
 ### Tests
 
-- Save dialog validation
-- Project list rendering
-- Delete confirmation flow
+- [x] ProjectSaveDialog validation tests (10 tests)
+- [x] ProjectList rendering tests (5 tests)
+- [x] ProjectCard tests (7 tests)
+- [x] ReuploadPrompt tests (7 tests)
 
 ---
 
