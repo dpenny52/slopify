@@ -44,7 +44,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [x] `npm run test` runs test suite
 - [x] `npm run lint` passes with no errors
 - [x] `npm run typecheck` passes with no errors
-- [ ] Convex dev server connects successfully (requires `npx convex dev` with auth)
+- [x] Convex dev server connects successfully
 - [x] Pre-commit hooks run lint and typecheck automatically
 
 ### Tests
@@ -52,7 +52,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [x] Smoke test: App component renders
 - [x] HomePage renders with branding
 - [x] Navigation links work
-- [ ] Convex client initializes (requires deployed Convex backend)
+- [x] Convex client initializes (deployed to content-bird-356.convex.cloud)
 
 ---
 
