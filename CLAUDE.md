@@ -30,3 +30,7 @@ Run before every commit:
 4. **Test public behavior, not implementation** - Tests should verify what users see and do, not internal state.
 
 5. **Validate at boundaries only** - Validate user input and external data; trust internal code.
+
+## UI Design
+
+Use the `frontend-design` skill when building UI components. Reference https://obsidian.md/ as the design inspiration - match its dark, minimal aesthetic with clean typography and subtle accents.
