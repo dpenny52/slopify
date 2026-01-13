@@ -114,33 +114,33 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
-## Feature 4: Video Upload and Preview
+## Feature 4: Video Upload and Preview ✅ COMPLETE
 
 ### Tasks
 
-- [ ] Create VideoUploader component with drag-and-drop
-- [ ] Implement file type validation (mp4, webm, mov)
-- [ ] Implement file size validation (500MB limit)
-- [ ] Implement video duration validation (5 minute max)
-- [ ] Create VideoPreview component
-- [ ] Implement useVideoUpload hook
-- [ ] Extract video metadata (duration, resolution)
-- [ ] Add upload progress indicator
+- [x] Create VideoUploader component with drag-and-drop
+- [x] Implement file type validation (mp4, webm, mov)
+- [x] Implement file size validation (500MB limit)
+- [x] Implement video duration validation (5 minute max)
+- [x] Create VideoPreview component
+- [x] Implement useVideoUpload hook
+- [x] Extract video metadata (duration, resolution)
+- [x] Add upload progress indicator
 
 ### Acceptance Criteria
 
-- [ ] Users can select video via file picker or drag-and-drop
-- [ ] Only supported formats accepted
-- [ ] Files exceeding size limit (500MB) show error
-- [ ] Videos exceeding duration limit (5 min) show error
-- [ ] Preview plays uploaded video
-- [ ] Users can remove/replace video
+- [x] Users can select video via file picker or drag-and-drop
+- [x] Only supported formats accepted
+- [x] Files exceeding size limit (500MB) show error
+- [x] Videos exceeding duration limit (5 min) show error
+- [x] Preview plays uploaded video
+- [x] Users can remove/replace video
 
 ### Tests
 
-- File validation with mock File objects
-- Drag-and-drop events
-- Error states for invalid files
+- [x] File validation with mock File objects
+- [x] Drag-and-drop events
+- [x] Error states for invalid files
 
 ---
 
