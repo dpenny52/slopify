@@ -25,3 +25,6 @@ dist-ssr
 
 # Testing
 coverage
+
+# Large sample overlay videos (download with scripts/download-overlays.sh)
+public/sample-overlays/*.mp4

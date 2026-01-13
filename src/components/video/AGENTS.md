@@ -24,6 +24,21 @@
 - Shows metadata: filename, resolution, duration, file size
 - Optional remove button via `onRemove` prop
 
+### OverlayThumbnail
+
+- Displays single overlay video as selectable thumbnail
+- Uses checkbox role for accessibility
+- Preview-on-hover: plays video when mouse enters
+- Shows checkmark when selected
+- Supports disabled state for max selection limit
+
+### OverlaySelector
+
+- Grid of OverlayThumbnail components
+- Displays selection count (e.g., "3/8 selected")
+- Uses `useOverlays` hook for selection state
+- Calls `onSelectionChange` callback when selection changes
+
 ## Hooks
 
 ### useVideoUpload (`src/hooks/useVideoUpload.ts`)
@@ -32,6 +47,12 @@
 - Handles validation via `validateVideo()`
 - Cleans up object URLs automatically
 - Exports: `video`, `isLoading`, `error`, `uploadVideo`, `removeVideo`, `clearError`
+
+### useOverlays (`src/hooks/useOverlays.ts`)
+
+- Manages overlay selection state
+- Enforces min (1) and max (8) selection limits
+- Exports: `overlays`, `selectedIds`, `selectionCount`, `isSelected`, `canSelect`, `hasMinSelection`, `toggleSelection`, `selectOverlay`, `deselectOverlay`, `clearSelection`, `getSelectedOverlays`
 
 ## Validation Utilities
 
@@ -53,9 +74,26 @@
 - `VideoValidationResult` - Union of valid/invalid results
 - Constants: `SUPPORTED_VIDEO_FORMATS`, `MAX_FILE_SIZE_MB`, `MAX_DURATION_SECONDS`
 
+### overlay.ts (`src/types/overlay.ts`)
+
+- `OverlayVideo` - id, name, description, src, thumbnailTime
+- `OverlaySelection` - id and position in grid
+- `SAMPLE_OVERLAYS` - Array of 8 pre-configured overlay videos
+- Constants: `MIN_OVERLAY_SELECTION` (1), `MAX_OVERLAY_SELECTION` (8)
+
+## Sample Overlays
+
+- 8 sample overlay videos in `public/sample-overlays/`
+- Videos are .gitignored due to size (~1.3GB total)
+- Run `scripts/download-overlays.sh` to download
+- Source: Mixkit (royalty-free, commercial use allowed)
+
 ## Testing Notes
 
 - Mock `useVideoUpload` hook for component tests
+- Mock `useOverlays` hook for OverlaySelector tests
 - Use `fireEvent.drop` with `dataTransfer.files` for drag-and-drop tests
 - Validation functions are pure and easy to unit test
 - Video element metadata extraction needs browser APIs (tested via integration)
+- Use `fireEvent.click` on checkbox role elements for selection tests
+- TypeScript strict mode: use non-null assertion (!) after explicit `expect().toBeDefined()` checks

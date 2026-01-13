@@ -144,34 +144,34 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
-## Feature 5: Sample Overlay Selection
+## Feature 5: Sample Overlay Selection ✅ COMPLETE
 
 ### Tasks
 
-- [ ] Download 8 sample overlay video clips from the internet (slime playing videos)
-- [ ] Bundle downloaded clips in public/sample-overlays/
-- [ ] Create overlay metadata configuration
-- [ ] Create OverlayThumbnail component
-- [ ] Create OverlaySelector component with grid
-- [ ] Implement selection state (1-8 limit)
-- [ ] Implement useOverlays hook
-- [ ] Add selection count indicator
-- [ ] Add preview-on-hover
+- [x] Download 8 sample overlay video clips from the internet (slime playing videos)
+- [x] Bundle downloaded clips in public/sample-overlays/
+- [x] Create overlay metadata configuration
+- [x] Create OverlayThumbnail component
+- [x] Create OverlaySelector component with grid
+- [x] Implement selection state (1-8 limit)
+- [x] Implement useOverlays hook
+- [x] Add selection count indicator
+- [x] Add preview-on-hover
 
 ### Acceptance Criteria
 
-- [ ] 8 sample overlays displayed
-- [ ] Users can select by clicking thumbnails
-- [ ] Selected overlays visually distinguished
-- [ ] Selection count shown (e.g., "3/8 selected")
-- [ ] Cannot select more than 8
-- [ ] Must select at least 1 to proceed
+- [x] 8 sample overlays displayed
+- [x] Users can select by clicking thumbnails
+- [x] Selected overlays visually distinguished
+- [x] Selection count shown (e.g., "3/8 selected")
+- [x] Cannot select more than 8
+- [x] Must select at least 1 to proceed
 
 ### Tests
 
-- Selection toggle functionality
-- Selection limits (min/max)
-- Selection count display
+- [x] Selection toggle functionality
+- [x] Selection limits (min/max)
+- [x] Selection count display
 
 ---
 
