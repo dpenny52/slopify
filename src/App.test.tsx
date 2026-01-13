@@ -1,7 +1,15 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import App from './App'
+
+vi.mock('convex/react', () => ({
+  useConvexAuth: () => ({ isLoading: false, isAuthenticated: false }),
+}))
+
+vi.mock('@convex-dev/auth/react', () => ({
+  useAuthActions: () => ({ signOut: vi.fn() }),
+}))
 
 describe('App', () => {
   it('renders homepage by default', () => {

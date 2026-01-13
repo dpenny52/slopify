@@ -81,36 +81,36 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
-## Feature 3: Authentication
+## Feature 3: Authentication ✅ COMPLETE
 
 **Note:** Auth is optional - users can use the editor without logging in. Login is only required to save/load projects.
 
 ### Tasks
 
-- [ ] Configure Convex Auth with password provider
-- [ ] Create user schema (extending authTables)
-- [ ] Create LoginForm component
-- [ ] Create SignupForm component
-- [ ] Create AuthGuard component for project save/load features only
-- [ ] Implement useAuth hook
-- [ ] Build login/signup page
-- [ ] Add logout functionality
-- [ ] Add "Login to save" prompt for unauthenticated users
+- [x] Configure Convex Auth with password provider
+- [x] Create user schema (extending authTables)
+- [x] Create LoginForm component
+- [x] Create SignupForm component
+- [x] Create AuthGuard component for project save/load features only
+- [x] Implement useAuth hook
+- [x] Build login/signup page
+- [x] Add logout functionality
+- [x] Add "Login to save" prompt for unauthenticated users (AuthGuard fallback)
 
 ### Acceptance Criteria
 
-- [ ] Users can create accounts with email/password
-- [ ] Users can log in with valid credentials
-- [ ] Invalid credentials show error messages
-- [ ] Auth state persists across page refreshes
-- [ ] Editor accessible without login
-- [ ] Save/load features prompt login if unauthenticated
+- [x] Users can create accounts with email/password
+- [x] Users can log in with valid credentials
+- [x] Invalid credentials show error messages
+- [x] Auth state persists across page refreshes
+- [x] Editor accessible without login
+- [x] Save/load features prompt login if unauthenticated (via AuthGuard)
 
 ### Tests
 
-- Form validation (empty fields, invalid email)
-- Error message display
-- AuthGuard redirect behavior
+- [x] Form validation (empty fields, invalid email)
+- [x] Error message display
+- [x] AuthGuard redirect behavior
 
 ---
 

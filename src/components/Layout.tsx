@@ -1,7 +1,16 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { useConvexAuth } from 'convex/react'
+import { useAuthActions } from '@convex-dev/auth/react'
+import { Button } from '@components/ui'
 
 function Layout() {
   const location = useLocation()
+  const { isLoading, isAuthenticated } = useConvexAuth()
+  const { signOut } = useAuthActions()
+
+  const handleLogout = async () => {
+    await signOut()
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -13,7 +22,7 @@ function Layout() {
           >
             Slopify
           </Link>
-          <div className="flex gap-6">
+          <div className="flex items-center gap-6">
             <Link
               to="/"
               className={`text-sm transition-colors ${
@@ -34,6 +43,19 @@ function Layout() {
             >
               Editor
             </Link>
+            {!isLoading && (
+              <>
+                {isAuthenticated ? (
+                  <Button variant="outline" onClick={handleLogout}>
+                    Log Out
+                  </Button>
+                ) : (
+                  <Link to="/login">
+                    <Button variant="secondary">Log In</Button>
+                  </Link>
+                )}
+              </>
+            )}
           </div>
         </nav>
       </header>
