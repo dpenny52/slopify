@@ -1,22 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useConvexAuth } from 'convex/react'
+import { useAuthToken } from '@convex-dev/auth/react'
 import { LoginForm, SignupForm } from '@components/auth'
 import { Card } from '@components/ui'
 
 function LoginPage() {
   const navigate = useNavigate()
-  const { isAuthenticated } = useConvexAuth()
+  const token = useAuthToken()
+  const isAuthenticated = token !== null
   const [mode, setMode] = useState<'login' | 'signup'>('login')
 
-  // Redirect if already logged in
+  // Redirect when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/editor')
+    }
+  }, [isAuthenticated, navigate])
+
   if (isAuthenticated) {
-    navigate('/editor')
     return null
   }
 
   const handleSuccess = () => {
-    navigate('/editor')
+    // Navigation is now handled by useEffect when isAuthenticated changes
   }
 
   return (

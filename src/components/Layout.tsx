@@ -1,14 +1,21 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { useConvexAuth } from 'convex/react'
-import { useAuthActions } from '@convex-dev/auth/react'
+import { useConvexAuth, useQuery } from 'convex/react'
+import { useAuthActions, useAuthToken } from '@convex-dev/auth/react'
+import { api } from '../../convex/_generated/api'
 import { Button } from '@components/ui'
 
 function Layout() {
   const location = useLocation()
-  const { isLoading, isAuthenticated } = useConvexAuth()
+  const convexAuth = useConvexAuth()
   const { signOut } = useAuthActions()
+  const token = useAuthToken()
+  const isAuthenticated = token !== null
+  const user = useQuery(api.users.currentUser)
+  // Get email from localStorage (stored during login)
+  const storedEmail = localStorage.getItem('userEmail')
 
   const handleLogout = async () => {
+    localStorage.removeItem('userEmail')
     await signOut()
   }
 
@@ -43,12 +50,17 @@ function Layout() {
             >
               Editor
             </Link>
-            {!isLoading && (
+            {!convexAuth.isLoading && (
               <>
                 {isAuthenticated ? (
-                  <Button variant="outline" onClick={handleLogout}>
-                    Log Out
-                  </Button>
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-[var(--text-secondary)]">
+                      {storedEmail || user?.email}
+                    </span>
+                    <Button variant="outline" onClick={handleLogout}>
+                      Log Out
+                    </Button>
+                  </div>
                 ) : (
                   <Link to="/login">
                     <Button variant="secondary">Log In</Button>

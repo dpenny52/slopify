@@ -51,7 +51,13 @@ function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
     setIsLoading(true)
 
     try {
-      await signIn('password', { email, password, flow: 'signUp' })
+      const result = await signIn('password', {
+        email,
+        password,
+        flow: 'signUp',
+      })
+      console.log('Sign up result:', result)
+      localStorage.setItem('userEmail', email)
       onSuccess?.()
     } catch (err) {
       // Handle specific error types from Convex Auth

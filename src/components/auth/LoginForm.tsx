@@ -31,9 +31,16 @@ function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
     setIsLoading(true)
 
     try {
-      await signIn('password', { email, password, flow: 'signIn' })
+      const result = await signIn('password', {
+        email,
+        password,
+        flow: 'signIn',
+      })
+      console.log('Sign in result:', result)
+      localStorage.setItem('userEmail', email)
       onSuccess?.()
-    } catch {
+    } catch (err) {
+      console.error('Sign in error:', err)
       setError('Invalid email or password')
     } finally {
       setIsLoading(false)
