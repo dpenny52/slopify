@@ -1,9 +1,11 @@
 # Slopify Implementation Plan
 
 ## Overview
+
 Slopify is a React web app that lets users upload a video, select 1-8 overlay videos, arrange them in a 3x3 grid around the main video, and download the composited result. All video processing happens client-side using WebCodecs/Canvas API.
 
 ## Tech Stack
+
 - **Frontend**: React 18 + TypeScript + Vite
 - **Backend**: Convex (database + auth)
 - **Styling**: Tailwind CSS
@@ -12,48 +14,52 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ---
 
-## Feature 1: Project Scaffolding
+## Feature 1: Project Scaffolding ✅ COMPLETE
 
 ### Tasks
-- [ ] Initialize Vite project with React + TypeScript template
-- [ ] Install and configure Convex
-- [ ] Set up Vitest and React Testing Library
-- [ ] Configure Tailwind CSS
-- [ ] Create folder structure (components/, hooks/, lib/, pages/, types/, constants/)
-- [ ] Set up path aliases (@components/*, @hooks/*, @lib/*)
-- [ ] Configure React Router
-- [ ] Set up ESLint with TypeScript and React plugins
-- [ ] Configure Prettier for code formatting
-- [ ] Enable TypeScript strict mode in tsconfig.json
-- [ ] Add pre-commit hooks with Husky + lint-staged
-- [ ] Create basic App shell with header and main content area
-- [ ] Create HomePage with "Slopify" branding and "Get Started" button
-- [ ] Create placeholder EditorPage route
-- [ ] Add basic Layout component (header with nav, main content area)
-- [ ] Style with Tailwind for a clean, usable appearance
+
+- [x] Initialize Vite project with React + TypeScript template
+- [x] Install and configure Convex
+- [x] Set up Vitest and React Testing Library
+- [x] Configure Tailwind CSS
+- [x] Create folder structure (components/, hooks/, lib/, pages/, types/, constants/)
+- [x] Set up path aliases (@components/_, @hooks/_, @lib/\*)
+- [x] Configure React Router
+- [x] Set up ESLint with TypeScript and React plugins
+- [x] Configure Prettier for code formatting
+- [x] Enable TypeScript strict mode in tsconfig.json
+- [x] Add pre-commit hooks with Husky + lint-staged
+- [x] Create basic App shell with header and main content area
+- [x] Create HomePage with "Slopify" branding and "Get Started" button
+- [x] Create placeholder EditorPage route
+- [x] Add basic Layout component (header with nav, main content area)
+- [x] Style with Tailwind for a clean, usable appearance
 
 ### Acceptance Criteria
-- [ ] `npm run dev` starts without errors and shows the app in browser
-- [ ] App displays homepage with Slopify branding
-- [ ] Navigation between Home and Editor pages works
-- [ ] `npm run build` produces production build
-- [ ] `npm run test` runs test suite
-- [ ] `npm run lint` passes with no errors
-- [ ] `npm run typecheck` passes with no errors
-- [ ] Convex dev server connects successfully
-- [ ] Pre-commit hooks run lint and typecheck automatically
+
+- [x] `npm run dev` starts without errors and shows the app in browser
+- [x] App displays homepage with Slopify branding
+- [x] Navigation between Home and Editor pages works
+- [x] `npm run build` produces production build
+- [x] `npm run test` runs test suite
+- [x] `npm run lint` passes with no errors
+- [x] `npm run typecheck` passes with no errors
+- [ ] Convex dev server connects successfully (requires `npx convex dev` with auth)
+- [x] Pre-commit hooks run lint and typecheck automatically
 
 ### Tests
-- Smoke test: App component renders
-- HomePage renders with branding
-- Navigation links work
-- Convex client initializes
+
+- [x] Smoke test: App component renders
+- [x] HomePage renders with branding
+- [x] Navigation links work
+- [ ] Convex client initializes (requires deployed Convex backend)
 
 ---
 
 ## Feature 2: UI Component Library
 
 ### Tasks
+
 - [ ] Create Button component (primary, secondary, outline, danger variants)
 - [ ] Create Card component
 - [ ] Create Modal component
@@ -62,11 +68,13 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Create Toast notification system
 
 ### Acceptance Criteria
+
 - [ ] All components are accessible (ARIA compliant)
 - [ ] Components are fully typed with TypeScript
 - [ ] Consistent styling across components
 
 ### Tests
+
 - Each component renders with default props
 - Test variants and states (loading, disabled)
 - Test click handlers and interactions
@@ -78,6 +86,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 **Note:** Auth is optional - users can use the editor without logging in. Login is only required to save/load projects.
 
 ### Tasks
+
 - [ ] Configure Convex Auth with password provider
 - [ ] Create user schema (extending authTables)
 - [ ] Create LoginForm component
@@ -89,6 +98,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Add "Login to save" prompt for unauthenticated users
 
 ### Acceptance Criteria
+
 - [ ] Users can create accounts with email/password
 - [ ] Users can log in with valid credentials
 - [ ] Invalid credentials show error messages
@@ -97,6 +107,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Save/load features prompt login if unauthenticated
 
 ### Tests
+
 - Form validation (empty fields, invalid email)
 - Error message display
 - AuthGuard redirect behavior
@@ -106,6 +117,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 ## Feature 4: Video Upload and Preview
 
 ### Tasks
+
 - [ ] Create VideoUploader component with drag-and-drop
 - [ ] Implement file type validation (mp4, webm, mov)
 - [ ] Implement file size validation (500MB limit)
@@ -116,6 +128,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Add upload progress indicator
 
 ### Acceptance Criteria
+
 - [ ] Users can select video via file picker or drag-and-drop
 - [ ] Only supported formats accepted
 - [ ] Files exceeding size limit (500MB) show error
@@ -124,6 +137,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Users can remove/replace video
 
 ### Tests
+
 - File validation with mock File objects
 - Drag-and-drop events
 - Error states for invalid files
@@ -133,6 +147,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 ## Feature 5: Sample Overlay Selection
 
 ### Tasks
+
 - [ ] Download 8 sample overlay video clips from the internet (slime playing videos)
 - [ ] Bundle downloaded clips in public/sample-overlays/
 - [ ] Create overlay metadata configuration
@@ -144,6 +159,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Add preview-on-hover
 
 ### Acceptance Criteria
+
 - [ ] 8 sample overlays displayed
 - [ ] Users can select by clicking thumbnails
 - [ ] Selected overlays visually distinguished
@@ -152,6 +168,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Must select at least 1 to proceed
 
 ### Tests
+
 - Selection toggle functionality
 - Selection limits (min/max)
 - Selection count display
@@ -161,6 +178,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 ## Feature 6: Grid Layout Preview
 
 ### Tasks
+
 - [ ] Define grid layout constants (8 outer + 1 center cell)
 - [ ] Create GridCell component
 - [ ] Create GridPreview component (3x3 grid)
@@ -170,6 +188,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Handle different overlay counts (1-8)
 
 ### Acceptance Criteria
+
 - [ ] Grid with center cell for main video
 - [ ] Selected overlays populate outer cells (grid adapts to number selected)
 - [ ] Empty cells hidden (asymmetric layout when <8 overlays selected)
@@ -177,6 +196,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] All videos play simultaneously in preview
 
 ### Tests
+
 - Grid renders correct number of cells
 - Overlay positioning logic
 - Drag-and-drop reordering
@@ -188,6 +208,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 **Note:** Output resolution matches the main video resolution. Each grid cell is scaled proportionally.
 
 ### Tasks
+
 - [ ] Create video decoder module (VideoDecoder API)
 - [ ] Create video encoder module (VideoEncoder API)
 - [ ] Implement canvas compositor for grid rendering
@@ -201,6 +222,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Add browser compatibility check
 
 ### Acceptance Criteria
+
 - [ ] Videos decoded frame-by-frame
 - [ ] Frames composited onto canvas in grid layout
 - [ ] Composited frames encoded to video
@@ -210,6 +232,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Unsupported browsers show error message
 
 ### Tests
+
 - Decoder/encoder modules with mocked WebCodecs
 - Canvas rendering snapshot tests
 - Progress calculation logic
@@ -220,6 +243,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 ## Feature 8: Video Download
 
 ### Tasks
+
 - [ ] Create DownloadButton component
 - [ ] Implement blob URL creation
 - [ ] Trigger browser download with filename
@@ -227,6 +251,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Clean up blob URLs after download
 
 ### Acceptance Criteria
+
 - [ ] Download button appears after processing
 - [ ] Click saves MP4 to device
 - [ ] File named "slopify-video-[timestamp].mp4"
@@ -234,6 +259,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Blob URLs cleaned up
 
 ### Tests
+
 - Blob URL creation
 - Download trigger mechanism
 
@@ -244,6 +270,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 **Note:** Only project configuration is saved (overlay selections, positions, project name). The main video is NOT stored - users must re-upload it when loading a saved project.
 
 ### Tasks
+
 - [ ] Define project schema in Convex (name, overlayIds, positions, createdAt)
 - [ ] Create saveProject mutation
 - [ ] Create getUserProjects query
@@ -255,6 +282,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Add "re-upload video" prompt when loading saved project
 
 ### Acceptance Criteria
+
 - [ ] Users can save project with a name
 - [ ] Projects persist after logout/login
 - [ ] Users see list of saved projects
@@ -264,6 +292,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Only authenticated users can save/load
 
 ### Tests
+
 - Save dialog validation
 - Project list rendering
 - Delete confirmation flow
@@ -273,6 +302,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 ## Feature 10: Editor Integration & Polish
 
 ### Tasks
+
 - [ ] Create EditorPage with wizard flow (Upload -> Select -> Arrange -> Process -> Download)
 - [ ] Add step indicator
 - [ ] Implement state persistence during session
@@ -282,6 +312,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Create error boundary
 
 ### Acceptance Criteria
+
 - [ ] Users complete full workflow without confusion
 - [ ] Step indicator shows progress
 - [ ] App usable on tablet-sized screens
@@ -289,6 +320,7 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 - [ ] Loading states provide feedback
 
 ### Tests
+
 - End-to-end flow testing
 - Step navigation
 - Error boundary behavior
@@ -343,39 +375,39 @@ slopify/
 
 ## Key Files to Create
 
-| File | Purpose |
-|------|---------|
-| `src/lib/video/compositor.ts` | Core grid compositing logic |
-| `src/lib/video/decoder.ts` | Video decoding utilities |
-| `src/lib/video/encoder.ts` | Video encoding utilities |
-| `src/hooks/useVideoProcessor.ts` | Processing pipeline orchestration |
-| `convex/schema.ts` | Database schema |
-| `convex/auth.ts` | Auth configuration |
-| `convex/projects.ts` | Project queries/mutations |
-| `src/components/video/GridPreview.tsx` | 3x3 grid preview |
-| `src/components/video/OverlaySelector.tsx` | Overlay selection UI |
-| `src/pages/EditorPage.tsx` | Main editor workflow |
+| File                                       | Purpose                           |
+| ------------------------------------------ | --------------------------------- |
+| `src/lib/video/compositor.ts`              | Core grid compositing logic       |
+| `src/lib/video/decoder.ts`                 | Video decoding utilities          |
+| `src/lib/video/encoder.ts`                 | Video encoding utilities          |
+| `src/hooks/useVideoProcessor.ts`           | Processing pipeline orchestration |
+| `convex/schema.ts`                         | Database schema                   |
+| `convex/auth.ts`                           | Auth configuration                |
+| `convex/projects.ts`                       | Project queries/mutations         |
+| `src/components/video/GridPreview.tsx`     | 3x3 grid preview                  |
+| `src/components/video/OverlaySelector.tsx` | Overlay selection UI              |
+| `src/pages/EditorPage.tsx`                 | Main editor workflow              |
 
 ---
 
 ## Key Libraries
 
-| Library | Purpose |
-|---------|---------|
-| convex | Database and backend |
-| @convex-dev/auth | Authentication |
-| mp4-muxer | MP4 muxing for WebCodecs output |
-| tailwindcss | Styling |
-| react-router-dom | Routing |
-| zod | Validation |
-| vitest | Testing |
-| @testing-library/react | Component testing |
-| eslint | Linting |
-| @typescript-eslint/* | TypeScript ESLint plugins |
-| eslint-plugin-react-hooks | React hooks linting rules |
-| prettier | Code formatting |
-| husky | Git hooks |
-| lint-staged | Run linters on staged files |
+| Library                   | Purpose                         |
+| ------------------------- | ------------------------------- |
+| convex                    | Database and backend            |
+| @convex-dev/auth          | Authentication                  |
+| mp4-muxer                 | MP4 muxing for WebCodecs output |
+| tailwindcss               | Styling                         |
+| react-router-dom          | Routing                         |
+| zod                       | Validation                      |
+| vitest                    | Testing                         |
+| @testing-library/react    | Component testing               |
+| eslint                    | Linting                         |
+| @typescript-eslint/\*     | TypeScript ESLint plugins       |
+| eslint-plugin-react-hooks | React hooks linting rules       |
+| prettier                  | Code formatting                 |
+| husky                     | Git hooks                       |
+| lint-staged               | Run linters on staged files     |
 
 ---
 
@@ -406,23 +438,25 @@ slopify/
 
 ## Technical Challenges & Mitigations
 
-| Challenge | Mitigation |
-|-----------|------------|
+| Challenge                     | Mitigation                                                                                                          |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | **WebCodecs browser support** | Detect at runtime with `'VideoDecoder' in window`, show error for unsupported browsers (Safari has limited support) |
-| **Memory with large videos** | Process frames in batches, call `frame.close()` immediately after use, use OffscreenCanvas in Web Workers |
-| **Video synchronization** | Normalize all videos to 30fps, loop shorter overlay videos to match main video duration |
-| **Audio handling** | Use only the main (user-uploaded) video's audio track; all overlay videos (slime clips) are muted in final output |
-| **Processing time** | Web Workers for non-blocking UI, accurate progress bar, cancellation support |
-| **Codec compatibility** | Use H.264 (AVC) as primary codec, detect supported codecs at runtime |
+| **Memory with large videos**  | Process frames in batches, call `frame.close()` immediately after use, use OffscreenCanvas in Web Workers           |
+| **Video synchronization**     | Normalize all videos to 30fps, loop shorter overlay videos to match main video duration                             |
+| **Audio handling**            | Use only the main (user-uploaded) video's audio track; all overlay videos (slime clips) are muted in final output   |
+| **Processing time**           | Web Workers for non-blocking UI, accurate progress bar, cancellation support                                        |
+| **Codec compatibility**       | Use H.264 (AVC) as primary codec, detect supported codecs at runtime                                                |
 
 ---
 
 ## Verification Plan
 
 ### Unit Tests
+
 Run `npm run test` - all tests should pass
 
 ### Manual Testing Checklist
+
 1. **Authentication**
    - [ ] Create new account
    - [ ] Log in with valid credentials
@@ -467,11 +501,14 @@ Run `npm run test` - all tests should pass
    - [ ] Delete project
 
 ### Browser Testing
+
 - Chrome (primary - full WebCodecs support)
 - Firefox (WebCodecs support)
 - Safari (limited WebCodecs - show warning)
 
 ### In-Browser Tests
+
 Use Claude Chrome extension for E2E workflow verification:
+
 - Complete full upload -> select -> arrange -> process -> download flow
 - Verify output video plays correctly
