@@ -31,16 +31,10 @@ Slopify is a React web app that lets users upload a video, select 1-8 overlay vi
 
 ### BUG-002: Convex dev server not started with npm run dev
 
-- **Status**: Open
+- **Status**: Fixed
 - **Priority**: High
-- **Description**: The Convex dev server needs to be running for auth and database operations to work. Currently, `npm run dev` only starts Vite, not the Convex dev server.
-- **Steps to reproduce**:
-  1. Run `npm run dev`
-  2. Try to log in to the app
-  3. See error "Could not find public function for 'auth:signIn'"
-- **Expected**: App connects to Convex backend
-- **Actual**: Server error - Convex functions not found
-- **Fix**: Update package.json scripts to run `concurrently` with both Vite and Convex dev servers, or document that `npx convex dev` must be run separately.
+- **Description**: The Convex dev server needs to be running for auth and database operations to work. Previously, `npm run dev` only started Vite, not the Convex dev server.
+- **Fix Applied**: Added `concurrently` package to run both Vite and Convex dev servers together. The `npm run dev` command now starts both servers with color-coded output (cyan for Vite, magenta for Convex). Individual scripts `dev:vite` and `dev:convex` are also available.
 
 ---
 
