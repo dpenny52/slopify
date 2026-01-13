@@ -15,4 +15,7 @@ export default defineConfig({
       '@types': path.resolve(__dirname, './src/types'),
     },
   },
+  optimizeDeps: {
+    exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@ffmpeg/core'],
+  },
 })

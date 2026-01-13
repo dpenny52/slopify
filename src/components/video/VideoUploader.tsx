@@ -15,8 +15,17 @@ interface VideoUploaderProps {
 export default function VideoUploader({ onVideoChange }: VideoUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isDragOver, setIsDragOver] = useState(false)
-  const { video, isLoading, error, uploadVideo, removeVideo, clearError } =
-    useVideoUpload()
+  const {
+    video,
+    isLoading,
+    isTranscoding,
+    transcodeProgress,
+    error,
+    uploadVideo,
+    removeVideo,
+    clearError,
+    cancelTranscode,
+  } = useVideoUpload()
 
   const handleFileSelect = async (file: File) => {
     const success = await uploadVideo(file)
@@ -80,6 +89,8 @@ export default function VideoUploader({ onVideoChange }: VideoUploaderProps) {
     )
   }
 
+  const showProgress = isLoading || isTranscoding
+
   return (
     <div className="space-y-4">
       <div
@@ -108,7 +119,7 @@ export default function VideoUploader({ onVideoChange }: VideoUploaderProps) {
               ? 'border-[var(--accent)] bg-[var(--accent)]/10'
               : 'border-[var(--border)] hover:border-[var(--text-secondary)]'
           }
-          ${isLoading ? 'pointer-events-none opacity-50' : ''}
+          ${showProgress ? 'pointer-events-none opacity-50' : ''}
         `}
       >
         <input
@@ -120,8 +131,8 @@ export default function VideoUploader({ onVideoChange }: VideoUploaderProps) {
           aria-hidden="true"
         />
 
-        {isLoading ? (
-          <div className="flex flex-col items-center gap-3">
+        {showProgress ? (
+          <div className="flex flex-col items-center gap-3 w-full max-w-xs">
             <svg
               className="animate-spin h-10 w-10 text-[var(--accent)]"
               xmlns="http://www.w3.org/2000/svg"
@@ -143,9 +154,41 @@ export default function VideoUploader({ onVideoChange }: VideoUploaderProps) {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
-            <span className="text-[var(--text-secondary)]">
-              Processing video...
-            </span>
+
+            {isTranscoding && transcodeProgress ? (
+              <div className="w-full space-y-2">
+                <p className="text-[var(--text-secondary)] text-center text-sm">
+                  {transcodeProgress.message}
+                </p>
+                <div className="w-full bg-[var(--bg-secondary)] rounded-full h-2">
+                  <div
+                    className="bg-[var(--accent)] h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${transcodeProgress.percentage}%` }}
+                  />
+                </div>
+                {transcodeProgress.stage === 'loading-ffmpeg' && (
+                  <p className="text-xs text-[var(--text-secondary)] text-center">
+                    First-time setup: downloading converter (~25MB)
+                  </p>
+                )}
+                <div className="flex justify-center pt-2">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      cancelTranscode()
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <span className="text-[var(--text-secondary)]">
+                Processing video...
+              </span>
+            )}
           </div>
         ) : (
           <>
@@ -172,7 +215,10 @@ export default function VideoUploader({ onVideoChange }: VideoUploaderProps) {
             <Button
               type="button"
               variant="secondary"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleBrowseClick()
+              }}
             >
               Browse Files
             </Button>
